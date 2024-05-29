@@ -36,9 +36,5 @@ yarn-error.log*
 next-env.d.ts
 
 .env
-<<<<<<< HEAD
 
-.cache/puppeteer/chrome/125.0.6422.78-chrome-win64.zip
-.cache/puppeteer/chrome-headless-shell/win64-125.0.6422.78/chrome-headless-shell-win64/chrome-headless-shell.exe
-=======
->>>>>>> 716c6299391450da2ed7697d685cfbcb259fee20
+.cache/
