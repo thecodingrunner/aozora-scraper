@@ -27,6 +27,6 @@ export const GET = async (req) => {
 
         return new Response(JSON.stringify(books), { status: 200 })
     } catch (error) {
-        return new Reponse(error, { status: 500 })
+        return new Response(error, { status: 500 })
     }
 }

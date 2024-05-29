@@ -13,7 +13,7 @@ import {
   addBookToDatabase,
 } from "@/lib/utils";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import React from "react";
 import { handleNavigateSubmit } from "@/lib/utils";
 import { Description, Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
@@ -22,7 +22,7 @@ import { connectToDB } from "@/utils/database";
 import Book from "@/models/book";
 import { useRouter, useSearchParams } from "next/navigation";
 
-export default function Home() {
+function HomeContent() {
   const { data: session } = useSession()
   const router = useRouter()
   const searchParams = useSearchParams();
@@ -334,5 +334,13 @@ export default function Home() {
       </main>
     )}
     </>
+  );
+}
+
+export default function Home() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <HomeContent />
+    </Suspense>
   );
 }
