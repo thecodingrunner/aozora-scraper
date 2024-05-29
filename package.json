@@ -9,9 +9,20 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@headlessui/react": "^2.0.4",
+    "axios": "^1.7.2",
+    "cheerio": "^1.0.0-rc.12",
+    "iconv-lite": "^0.6.3",
+    "iso-8859-2": "^3.0.4",
+    "mongodb": "^6.6.2",
+    "mongoose": "^8.4.0",
+    "next": "14.2.3",
+    "next-auth": "^4.24.7",
+    "node-fetch": "^3.3.2",
+    "puppeteer": "^22.10.0",
     "react": "^18",
     "react-dom": "^18",
-    "next": "14.2.3"
+    "react-draggable": "^4.4.6"
   },
   "devDependencies": {
     "postcss": "^8",
