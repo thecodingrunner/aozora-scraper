@@ -12,6 +12,10 @@ const nextConfig = {
         ...config.experiments,
         topLevelAwait: true,
       }
+      config.module.rules.push({
+        test: /\.js\.map$/,
+        use: 'ignore-loader'
+      });
       return config
     }
   }
