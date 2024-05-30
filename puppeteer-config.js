@@ -1,5 +1,5 @@
 import { join } from 'path';
-import chromium from 'chrome-aws-lambda';
+import chromium from '@sparticuz/chromium'
 
 const isServerless = process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME;
 
@@ -11,6 +11,7 @@ const puppeteerConfig = async () => ({
     args: isServerless ? chromium.args : [],
     defaultViewport: chromium.defaultViewport,
     headless: isServerless ? chromium.headless : true,
+    ignoreHTTPSErrors: true,
 });
 
 export default puppeteerConfig;
