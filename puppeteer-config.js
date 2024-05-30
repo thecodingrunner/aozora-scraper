@@ -12,6 +12,7 @@ const puppeteerConfig = async () => ({
     defaultViewport: chromium.defaultViewport,
     headless: isServerless ? chromium.headless : true,
     ignoreHTTPSErrors: true,
+    ignoreDefaultArgs: ['--disable-extensions'],
 });
 
 export default puppeteerConfig;
