@@ -5,6 +5,6 @@ const {join} = require('path');
  */
 module.exports = {
     // Changes the cache location for Puppeteer.
-    cacheDirectory: join(__dirname, '.cache', 'puppeteer'),
-    // executablePath: join(__dirname, '.cache', 'puppeteer', 'chrome', 'win64-125.0.6422.78', 'chrome-win64'),
+    cacheDirectory: join('C:', 'Users', 'Finn', 'repos', 'book-analysis-app', '.cache', 'puppeteer'),
+    executablePath: join('C:', 'Users', 'Finn', 'repos', 'book-analysis-app', '.cache', 'puppeteer', 'chrome', 'win64-125.0.6422.78', 'chrome-win64', 'chrome.exe'),
 };
