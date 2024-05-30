@@ -2,7 +2,7 @@
 const nextConfig = {
     experimental: {
       appDir: true,
-      serverComponentsExternalPackages: ["mongoose"],
+      serverComponentsExternalPackages: ["mongoose",'puppeteer-core', '@sparticuz/chromium'],
     },
     images: {
       domains: ['lh3.googleusercontent.com'],

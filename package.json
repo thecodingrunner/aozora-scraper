@@ -10,8 +10,10 @@
   },
   "dependencies": {
     "@headlessui/react": "^2.0.4",
+    "@sparticuz/chromium": "^123.0.1",
     "axios": "^1.7.2",
     "cheerio": "^1.0.0-rc.12",
+    "chrome-aws-lambda": "^10.1.0",
     "iconv-lite": "^0.6.3",
     "iso-8859-2": "^3.0.4",
     "mongodb": "^6.6.2",
