@@ -3,7 +3,7 @@ import React from 'react'
 import { useRouter } from 'next/navigation'
 
 const BookItem = ({book}) => {
-    console.log(book)
+    // console.log(book)
     const router = useRouter()
 
     const handleEdit = (book) => {
@@ -33,7 +33,7 @@ const BookItem = ({book}) => {
         <h3><b>Words:</b> {book.words.slice(0,3).map(word => (
           <span>{word}, </span> 
         ))}...</h3>
-        <button className='btn-black font-semibold' onClick={() => handleEdit(book)}>View Book</button>
+        <button className='btn-black font-semibold mt-auto' onClick={() => handleEdit(book)}>View Book</button>
         <button className='btn-black font-semibold' onClick={() => handleDelete(book)}>Delete Book</button>
     </div>
   )

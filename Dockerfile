@@ -1,20 +1,33 @@
-# Use the official Node.js base image
-FROM node:14
+FROM node
 
-# Set the working directory in the container
 WORKDIR /app
 
-# Copy package.json and package-lock.json to the working directory
+RUN apt-get update && apt-get install -y \
+    chromium \
+    libgconf-2-4 \
+    libatk1.0-0 \
+    libatk-bridge2.0-0 \
+    libgdk-pixbuf2.0-0 \
+    libgtk-3-0 \
+    libgbm-dev \
+    libnss3-dev \
+    libxss-dev \
+    fonts-ipafont-gothic fonts-wqy-zenhei fonts-thai-tlwg fonts-kacst fonts-freefont-ttf \
+    --no-install-recommends
+
+
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
+ENV PUPPETEER_EXECUTABLE_PATH /usr/bin/chromium
+
+
 COPY package*.json ./
 
-# Install dependencies
 RUN npm install
 
-# Copy the rest of the application code
 COPY . .
 
-# Expose the port your Next.js app runs on
 EXPOSE 3000
 
-# Start the Next.js application
-CMD ["npm", "run", "dev"]
+RUN npm run build
+
+CMD ["npm", "start"]

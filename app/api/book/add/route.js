@@ -1,5 +1,5 @@
-import { connectToDB } from "@/utils/database";
 import Book from "@/models/book";
+import connectToDB from "@/utils/database";
 
 export const POST = async (req) => {
     const book = await req.json();

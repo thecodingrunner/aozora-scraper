@@ -1,4 +1,4 @@
-import { connectToDB } from "@/utils/database";
+import connectToDB from "@/utils/database";
 import Book from "@/models/book";
 import { STATIC_STATUS_PAGE_GET_INITIAL_PROPS_ERROR } from "next/dist/lib/constants";
 
@@ -30,19 +30,20 @@ export const DELETE = async (req, { params }) => {
 
 export const PATCH = async (req, { params }) => {
 
-    const words = await req.json()
-    console.log(words)
+    const { words, page } = await req.json()
+    // console.log(words)
     try {
         await connectToDB()
 
         let existingBook = await Book.findById(params.id)
-        console.log(existingBook)
+        // console.log(existingBook)
 
         if (!existingBook) {
             return new Response('Prompt not found', { status: 404 })
         }
 
         existingBook.words = words
+        existingBook.page = page
 
         await existingBook.save()
 

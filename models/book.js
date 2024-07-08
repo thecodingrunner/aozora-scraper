@@ -23,6 +23,9 @@ const BookSchema = new Schema({
     },
     words: {
         type: [String],
+    },
+    page: {
+        type: Number,
     }
 }, {timestamps: true})
 

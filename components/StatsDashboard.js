@@ -10,10 +10,11 @@ const StatsDashboard = ({
   includedGrammar,
   frequency,
   freqScore,
-  numberOfWords,
+  numberOfKanji,
   numberOfSentences,
   averageSentenceLength,
-  bookInfo
+  bookInfo,
+  numberOfPages
 }) => {
   const [isOpenN1Vocab, setIsOpenN1Vocab] = useState(false);
   const [isOpenN2Vocab, setIsOpenN2Vocab] = useState(false);
@@ -29,16 +30,10 @@ const StatsDashboard = ({
 
   const [openScoreInfo, setOpenScoreInfo] = useState(false);
 
-  console.log(includedGrammar);
-  console.log(includedVocab);
-
   const vocab = includedVocab;
   const grammar = includedGrammar;
 
-  console.log(freqScore * 3.6)
 
-  console.log(vocab);
-  console.log(grammar);
   return (
     <div className="flex flex-col justify-left w-9/12 mx-auto gap-5 mb-10">
       <div className="dashboard-box flex-wrap">
@@ -140,8 +135,8 @@ const StatsDashboard = ({
 
       <div className="flex justify-center gap-20 dashboard-box">
         <div className="flex flex-col gap-4 justify-center">
-          <p className="text-xl font-semibold">Word Count: {numberOfWords}</p>
-          <p className="text-xl font-semibold">Page Count: {Math.round(numberOfWords/200)}</p>
+          <p className="text-xl font-semibold">Kanji Count: {numberOfKanji}</p>
+          <p className="text-xl font-semibold">Page Count: {numberOfPages}</p>
           <p className="text-xl font-semibold">Sentence Count: {numberOfSentences}</p>
           <p className="text-xl font-semibold">Average sentence length: {averageSentenceLength}</p>
         </div>

@@ -21,6 +21,8 @@ import { useSession } from "next-auth/react";
 import { connectToDB } from "@/utils/database";
 import Book from "@/models/book";
 import { useRouter, useSearchParams } from "next/navigation";
+import SignUp from "@/components/SignUp";
+import SignIn from "@/components/SignIn";
 
 function HomeContent() {
   const { data: session } = useSession()
@@ -46,6 +48,10 @@ function HomeContent() {
   const [savedWords, setSavedWords] = useState([]);
   const [selectedWord, setSelectedWord] = useState('')
 
+  const [page, setPage] = useState(1)
+
+  const [formType, setFormType] = useState('signin')
+
   const saveWord = (word) => {
     if (word && !savedWords.includes(word)) {
       const newWords = [...savedWords, word];
@@ -67,8 +73,12 @@ function HomeContent() {
     }
   };
 
+  // useEffect(() => {
+  //   console.log(session)
+  // },[])
+
   useEffect(() => {
-    console.log(savedWords)
+    // console.log(savedWords)
     document.addEventListener('mouseup', handleTextSelection);
     return () => {
       document.removeEventListener('mouseup', handleTextSelection);
@@ -80,11 +90,12 @@ function HomeContent() {
       const response = await fetch(`/api/book/${bookId}`)
       const data = await response.json();
 
-      console.log(data.words)
+      // console.log(data.words)
       setSearchNavigatePrompt(data.link)
 
       submitFunction(data.link)
       setSavedWords(data.words)
+      setPage(data.page)
     }
 
     if (bookId) {
@@ -115,13 +126,13 @@ function HomeContent() {
       const bookTemp = await scrapeAndStoreBook(link);
       setBook(bookTemp);
 
-      console.log(book)
+      // console.log(book)
 
       // Analyse for vocab and grammar and set to states
       const listOfVocab = await checkVocab(bookTemp.textNoHiragana);
       const listOfGrammar = await checkGrammar(bookTemp.textNoHiragana);
-      const frequency = await checkFrequency(bookTemp.textNoHiragana);
-      console.log(frequency);
+      const frequency = await checkFrequency(bookTemp.textPure);
+      // console.log(frequency);
       setIncludedVocab(listOfVocab);
       setIncludedGrammar(listOfGrammar);
       setFrequency(frequency);
@@ -170,7 +181,7 @@ function HomeContent() {
       
       const response = await fetch(`/api/book/${bookId}`, {
           method: 'PATCH',
-          body: JSON.stringify(savedWords)
+          body: JSON.stringify({savedWords, page})
       })
 
       if (response.ok) {
@@ -195,7 +206,7 @@ function HomeContent() {
             type="text"
             value={searchNavigatePrompt}
             onChange={(e) => setSearchNavigatePrompt(e.target.value)}
-            className="border-2 w-96 py-2 text-2xl px-4"
+            className="border-2 w-64 sm:w-96 py-2 text-lg sm:text-2xl px-4"
             placeholder={"Enter a book url here..."}
           />
           <button className="py-2 px-4 bg-black text-white">
@@ -297,13 +308,14 @@ function HomeContent() {
                 includedGrammar={includedGrammar}
                 frequency={frequency.includedItems}
                 freqScore={frequency.freqScore}
-                numberOfSentences={frequency.numberOfSentences}
-                numberOfWords={frequency.numberOfWords}
-                averageSentenceLength={frequency.averageSentenceLength}
+                numberOfSentences={book.numberOfSentences}
+                numberOfKanji={frequency.numberOfKanji}
+                averageSentenceLength={book.averageSentenceLength}
+                numberOfPages={book.numberOfPages}
                 bookInfo={bookInfo.bookInfo}
               />
             )}
-          {showBook && book && <BookReader book={book} savedWords={savedWords} />}
+          {showBook && book && <BookReader book={book} savedWords={savedWords} page={page} setPage={setPage} />}
           {/* includedVocab !== "" && includedGrammar !== "" */}
         </div>
 
@@ -326,11 +338,18 @@ function HomeContent() {
       )}
       </main>
     ) : (
-      <main className="flex flex-col gap-5 w-9/12 mx-auto h-[70vh] justify-center">
-        <h1 className="text-4xl">Welcome to Aozora Scraper</h1>
-        <p className="text-2xl">Aozora Scraper analyses the difficulty of Aozora Bunko books, and presents the book in a more readable Kindle style format.</p>
-        <p className="text-2xl">Please login to use the website.</p>
-        <p className="text-2xl">Once you have logged in, you can paste the link of any desired Aozora Bunko book into the search bar, and the tool will analyse the text, providing data on the JLPT vocabulary and grammar used, general statistics, and the overall difficulty score.</p>
+      <main className="flex flex-col lg:flex-row w-9/12 mx-auto my-10 justify-center items-center gap-6">
+        <div className="flex flex-col gap-5 justify-center">
+          <h1 className="text-4xl">Welcome to Aozora Scraper</h1>
+          <p className="text-2xl">Aozora Scraper analyses the difficulty of Aozora Bunko books, and presents the book in a more readable Kindle style format.</p>
+          <p className="text-2xl">Please login to use the website. <br/><br/>Demo Username: demousername <br/>Demo Password: password123</p>
+          <p className="text-2xl">Once you have logged in, you can paste the link of any desired Aozora Bunko book into the search bar, and the tool will analyse the text, providing data on the JLPT vocabulary and grammar used, general statistics, and the overall difficulty score.</p>
+        </div>
+        {formType === 'signin' ? (
+          <SignIn setFormType={setFormType} />
+        ) : (
+          <SignUp setFormType={setFormType} />
+        )}
       </main>
     )}
     </>

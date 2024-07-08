@@ -1,32 +1,46 @@
-import { connectToDB } from "@/utils/database";
+import connectToDB from "@/utils/database";
 import Book from "@/models/book";
-import { getSession, useSession } from "next-auth/react";
-import { getServerSession } from "next-auth";
 import User from "@/models/user";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "../auth/[...nextauth]/route";
 
-export const GET = async (req) => {
+export const GET = async (req, res) => {
     try {
         await connectToDB();
 
-        const session = await getServerSession();
+        const session = await getServerSession(authOptions);
 
-        const sessionUser = await User.findOne({
-            email: session.user.email
-        })
+        if (!session) {
+            return new Response("Unauthorized", { status: 401 });
+        }
 
-        session.user.id = sessionUser._id.toString();
+        console.log("Session:", session);
 
-        console.log(session.user.id)
+        let userId;
 
-        const userId = session.user.id
+        if (session.user.id) {
+            // If the id is already in the session, use it
+            userId = session.user.id;
+        } else if (session.user.email) {
+            // If we have an email, find the user by email
+            const user = await User.findOne({ email: session.user.email });
+            if (!user) {
+                return new Response("User not found", { status: 404 });
+            }
+            userId = user._id.toString();
+        } else {
+            return new Response("Invalid session data", { status: 400 });
+        }
+
+        console.log("User ID:", userId);
 
         const books = await Book.find({ userId }).populate('userId');
 
-        // _id: session.user.id
-        console.log(JSON.stringify(books))
+        // console.log("Books:", JSON.stringify(books));
 
-        return new Response(JSON.stringify(books), { status: 200 })
+        return new Response(JSON.stringify(books), { status: 200 });
     } catch (error) {
-        return new Response(error, { status: 500 })
+        console.error("Error:", error);
+        return new Response(JSON.stringify({ error: error.message }), { status: 500 });
     }
 }

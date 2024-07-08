@@ -5,7 +5,7 @@ import { Description, Dialog, DialogPanel, DialogTitle } from '@headlessui/react
 
 const DialogBox = ({contents, isOpen, setIsOpen, vocab}) => {
     const [showTranslation, setShowTranslation] = useState(false)
-    console.log(contents)
+    // console.log(contents)
 
   return (
     <Dialog open={isOpen} onClose={() => setIsOpen(false)} className="fixed top-[10vh] left-1/8 z-50">
@@ -23,7 +23,7 @@ const DialogBox = ({contents, isOpen, setIsOpen, vocab}) => {
                         <>
                             {contents.map((item) => (
                                 <button onClick={(e) => {
-                                    console.log(e.target.innerText)
+                                    // console.log(e.target.innerText)
                                     if (e.target.innerText === item[0]) {
                                         setShowTranslation(item[1])
                                     } else if (e.target.innerText === item[1]) {
