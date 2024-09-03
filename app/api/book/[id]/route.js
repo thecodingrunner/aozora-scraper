@@ -1,6 +1,5 @@
 import connectToDB from "@/utils/database";
 import Book from "@/models/book";
-import { STATIC_STATUS_PAGE_GET_INITIAL_PROPS_ERROR } from "next/dist/lib/constants";
 
 export const GET = async (req, { params }) => {
     try {

@@ -219,7 +219,7 @@ function HomeContent() {
         {bookInfo && (
           <div className="w-9/12 mx-auto">
             <h2 className="text-5xl font-bold my-6 flex gap-4 flex-wrap items-center">
-              {bookInfo.bookInfo.titleKanji} ({bookInfo.bookInfo.titleHiragana}) 
+              Book Title: {bookInfo.bookInfo.titleKanji} ({bookInfo.bookInfo.titleHiragana}) 
               {(!submitted && !bookId) && (
                 <button className="btn-black flex gap-2 items-center text-xl font-semibold" onClick={() => addBook()}>
                   Add Book
@@ -315,7 +315,7 @@ function HomeContent() {
                 bookInfo={bookInfo.bookInfo}
               />
             )}
-          {showBook && book && <BookReader book={book} savedWords={savedWords} page={page} setPage={setPage} />}
+          {showBook && book && page && <BookReader book={book} savedWords={savedWords} page={page} setPage={setPage} />}
           {/* includedVocab !== "" && includedGrammar !== "" */}
         </div>
 

@@ -13,6 +13,11 @@ const BookReader = ({ book, savedWords, page, setPage }) => {
   const [oldFont, setOldFont] = useState(false);
   const [hiragana, setHiragana] = useState(false);
 
+  useEffect(() => {
+    console.log(book)
+    console.log(page)
+  },[])
+
   // console.log(savedWords);
 
   useEffect(() => {

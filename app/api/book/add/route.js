@@ -14,7 +14,8 @@ export const POST = async (req) => {
             author: book.author,
             link: book.link,
             score: book.score,
-            words: book.savedWords
+            words: book.savedWords,
+            page: 1,
         })
 
         await newBook.save();

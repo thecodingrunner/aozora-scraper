@@ -26,6 +26,7 @@ const BookSchema = new Schema({
     },
     page: {
         type: Number,
+        default: 1,
     }
 }, {timestamps: true})
 
